@@ -1,4 +1,4 @@
-package com.example.fetchproblem.dataModels
+package com.example.fetchproblem.model
 
 data class Hiring(
     val id: Int = -1,
