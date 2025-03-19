@@ -32,10 +32,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        println(viewModel.hiringViewState.hiringItems)
-
         val hiringItemRecyclerViewAdapter = HiringItemRecyclerViewAdapter(viewModel.hiringViewState.hiringItems)
-
         val recyclerView: RecyclerView = findViewById(R.id.hiringItemsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = hiringItemRecyclerViewAdapter
