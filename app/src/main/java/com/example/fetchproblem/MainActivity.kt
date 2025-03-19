@@ -1,13 +1,17 @@
 package com.example.fetchproblem
 
 import android.os.Bundle
-import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.fetchproblem.adapter.HiringItemRecyclerViewAdapter
 import com.example.fetchproblem.viewModel.MainActivityViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        runBlocking { delay(1000) }
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -26,5 +31,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        println(viewModel.hiringViewState.hiringItems)
+
+        val hiringItemRecyclerViewAdapter = HiringItemRecyclerViewAdapter(viewModel.hiringViewState.hiringItems)
+
+        val recyclerView: RecyclerView = findViewById(R.id.hiringItemsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = hiringItemRecyclerViewAdapter
     }
 }

@@ -11,7 +11,7 @@ import java.net.URL
 
 class MainActivityViewModel(): ViewModel() {
 
-    var hiringData = ""
+    private var hiringData = ""
     var hiringViewState: HiringViewState = HiringViewState(mutableListOf())
     private val json = Json {
         coerceInputValues = true
@@ -26,8 +26,12 @@ class MainActivityViewModel(): ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 hiringData = URL("https://fetch-hiring.s3.amazonaws.com/hiring.json").readText()
-                hiringViewState = HiringViewState(json.decodeFromString<List<HiringItem>>(hiringData))
-                println(hiringViewState.hiringItems)
+                hiringViewState = HiringViewState(
+                    json.decodeFromString<List<HiringItem>>(hiringData)
+                        .filter{ it.name.isNotBlank() }
+                        .sortedBy { it.name }
+                        .sortedBy { it.listId }
+                )
             }
         }
     }
