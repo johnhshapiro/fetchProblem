@@ -1,5 +1,6 @@
 package com.example.fetchproblem.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +17,6 @@ class HiringItemRecyclerViewAdapter(private val dataSet: List<ListItem>) :
         const val TYPE_ITEM = 1
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return dataSet[position].type
-    }
-
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idTextView: TextView = view.findViewById(R.id.id_textView)
         val nameTextView: TextView = view.findViewById(R.id.name_textView)
@@ -27,6 +24,10 @@ class HiringItemRecyclerViewAdapter(private val dataSet: List<ListItem>) :
 
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val hiringItemHeaderTextView: TextView = view.findViewById(R.id.hiringItemHeaderTextView)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return dataSet[position].type
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -40,6 +41,7 @@ class HiringItemRecyclerViewAdapter(private val dataSet: List<ListItem>) :
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         if (viewHolder is HeaderViewHolder) {
             viewHolder.hiringItemHeaderTextView.text = "listId: ${dataSet[position].header}"

@@ -5,13 +5,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fetchproblem.adapter.HiringItemRecyclerViewAdapter
 import com.example.fetchproblem.viewModel.MainActivityViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        runBlocking { delay(1000) }
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -32,9 +33,16 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val hiringItemRecyclerViewAdapter = HiringItemRecyclerViewAdapter(viewModel.hiringViewState.hiringItems)
-        val recyclerView: RecyclerView = findViewById(R.id.hiringItemsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = hiringItemRecyclerViewAdapter
+        lifecycleScope.launch {
+            viewModel.hiringViewState.collect { viewState ->
+                val loadingProgressBar = findViewById<ContentLoadingProgressBar>(R.id.loadingProgressBar)
+                loadingProgressBar.isVisible= viewState.loading
+
+                val hiringItemRecyclerViewAdapter = HiringItemRecyclerViewAdapter(viewState.hiringItems)
+                val recyclerView: RecyclerView = findViewById(R.id.hiringItemsRecyclerView)
+                recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                recyclerView.adapter = hiringItemRecyclerViewAdapter
+            }
+        }
     }
 }

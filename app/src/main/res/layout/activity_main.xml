@@ -16,4 +16,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        style="?android:progressBarStyleHorizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
