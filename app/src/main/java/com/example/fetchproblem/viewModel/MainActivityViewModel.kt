@@ -12,10 +12,10 @@ import java.net.URL
 class MainActivityViewModel(): ViewModel() {
 
     private var hiringData = ""
-    var hiringViewState: HiringViewState = HiringViewState(mutableListOf())
     private val json = Json {
         coerceInputValues = true
     }
+    var hiringViewState: HiringViewState = HiringViewState(mutableListOf())
 
 
     init {
