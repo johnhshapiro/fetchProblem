@@ -33,10 +33,12 @@ class HiringItemRecyclerViewAdapter(private val dataSet: List<ListItem>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return if (viewType == TYPE_HEADER) {
-            val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.hiring_item_header_layout, viewGroup, false)
+            val view = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.hiring_item_header_layout, viewGroup, false)
             HeaderViewHolder(view)
         } else {
-            val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.hiring_item_layout, viewGroup, false)
+            val view = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.hiring_item_layout, viewGroup, false)
             ItemViewHolder(view)
         }
     }

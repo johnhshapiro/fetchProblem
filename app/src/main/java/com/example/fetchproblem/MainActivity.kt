@@ -35,10 +35,12 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.hiringViewState.collect { viewState ->
-                val loadingProgressBar = findViewById<ContentLoadingProgressBar>(R.id.loadingProgressBar)
-                loadingProgressBar.isVisible= viewState.loading
+                val loadingProgressBar =
+                    findViewById<ContentLoadingProgressBar>(R.id.loadingProgressBar)
+                loadingProgressBar.isVisible = viewState.loading
 
-                val hiringItemRecyclerViewAdapter = HiringItemRecyclerViewAdapter(viewState.hiringItems)
+                val hiringItemRecyclerViewAdapter =
+                    HiringItemRecyclerViewAdapter(viewState.hiringItems)
                 val recyclerView: RecyclerView = findViewById(R.id.hiringItemsRecyclerView)
                 recyclerView.layoutManager = LinearLayoutManager(applicationContext)
                 recyclerView.adapter = hiringItemRecyclerViewAdapter
